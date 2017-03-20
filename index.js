@@ -1,3 +1,4 @@
+const EventEmitter = require('event-emitter-es6');
 const Config = require('./lib/config');
 const UploadItem = require('./lib/upload-item');
 const Executer = require('./lib/executer');
@@ -15,8 +16,14 @@ const promiseReduce = (acc, x) => acc.then(promiseConcat(x));
  */
 const serial = funcs => funcs.reduce(promiseReduce, Promise.resolve([]));
 
-module.exports = class Main {
+module.exports = class Main extends EventEmitter {
+  static get events() {
+    return {
+      "EVENT_ON_RESULT": "event_on_result"
+    };
+  }
   constructor() {
+    super();
     this.properties = {};
     this.isPhantomReady = false;
     this.jobsQueue = [];
@@ -40,16 +47,19 @@ module.exports = class Main {
     this.config.password = password;
     this.jobsQueue.push(() => this.executer.doLogin());
   }
-  uploadFile(file) {
+  uploadFile(file, folder) {
     const item = new UploadItem({
       item: {
-        file: file
+        file: file,
+        dest: '63mv6ttnv4kv4'
       }
     });
     this.jobsQueue.push(() => this.executer.startUploadJob(item));
   }
   runJobsQueue() {
     serial(this.jobsQueue)
-    .then(console.log.bind(console));
+    .then((value) => {
+      this.emit(Main.events.EVENT_ON_RESULT, value.filter((x) => x!=undefined));
+    })
   }
 };
