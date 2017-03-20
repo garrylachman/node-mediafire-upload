@@ -1,0 +1,28 @@
+{
+  "name": "node-mediafire-upload",
+  "version": "1.0.0",
+  "description": "Upload files to MediaFire - unofficial api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tests": "node node_modules\\nodeunit\\bin\\nodeunit tests\\test.unit.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/garrylachman/node-mediafire-upload.git"
+  },
+  "author": "Garry Lachman",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/garrylachman/node-mediafire-upload/issues"
+  },
+  "homepage": "https://github.com/garrylachman/node-mediafire-upload#readme",
+  "dependencies": {
+    "asyncawait": "^1.0.6",
+    "event-emitter-es6": "^1.1.5",
+    "phantom": "^4.0.1"
+  },
+  "devDependencies": {
+    "nodeunit": "^0.11.0"
+  }
+}
